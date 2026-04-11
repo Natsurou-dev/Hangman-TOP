@@ -45,5 +45,36 @@ def get_user_guess(usedLetters)
   end
 end
 
-currGuess = get_user_guess(usedLetters)
-puts currGuess
+#gameplay
+while true do
+
+  #get a user guess
+  currGuess = get_user_guess(usedLetters)
+
+  #if correct: add to userCorrectGuesses
+  if secretChars.include?(currGuess)
+    secretChars.each_index do |i|
+      userCorrectGuesses[i] = currGuess if secretChars[i] == currGuess
+    end
+  end
+  
+  #move guess from unused to used letters
+  unusedLetters.delete(currGuess)
+  usedLetters.push(currGuess)
+
+  #display progress
+  puts; puts
+  p userCorrectGuesses
+  puts; puts
+  #if userCorrectGuesses contains no underlines, they win
+  unless userCorrectGuesses.include?("_")
+    puts "You win!"
+    return
+  end
+  #if they run out of unusedLetters, they lose
+  if unusedLetters.empty?
+    puts "You lose!"
+    return
+  end
+end
+
