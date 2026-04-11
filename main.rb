@@ -46,8 +46,11 @@ def get_user_guess(usedLetters)
 end
 
 #gameplay
+attempts = 1
 while true do
 
+  #display turn
+  puts "Turn [#{attempts} / 8]"
   #get a user guess
   currGuess = get_user_guess(usedLetters)
 
@@ -64,15 +67,18 @@ while true do
 
   #display progress
   puts; puts
-  p userCorrectGuesses
+  p userCorrectGuesses.join(" ")
   puts; puts
   #if userCorrectGuesses contains no underlines, they win
-  unless userCorrectGuesses.include?("_")
+  if !userCorrectGuesses.include?("_")
     puts "You win!"
     return
   end
-  #if they run out of unusedLetters, they lose
-  if unusedLetters.empty?
+
+  attempts += 1
+
+  #if they run out of attempts, they lose
+  if attempts > 7
     puts "You lose!"
     return
   end
